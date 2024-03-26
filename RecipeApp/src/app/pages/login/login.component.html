@@ -1,0 +1,16 @@
+<div>
+    @if(loading){
+        <p>Loading...</p>
+    }
+    @else {
+        <p>{{error}}</p>
+    }
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+    <label>Email</label>
+    <input type="text" formControlName="email" placeholder="Email">
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="Password">
+    <button type="submit">Login</button>
+</form>

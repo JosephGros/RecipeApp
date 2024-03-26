@@ -1,0 +1,25 @@
+<h1 class="text-4xl">{{title}}</h1>
+
+<nav>
+  <ul>
+      @if (auth.signedIn$ | async){
+        <li>
+          <p>{{auth.userName}}</p>
+        </li>
+        <li>
+          <button (click)="logout()">Logout</button>
+        </li>
+      }
+      @else {
+        <li>
+          <a routerLink="/signin" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
+        </li>
+        <li>
+          <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a>
+        </li>
+      }
+  </ul>
+</nav>
+<div>
+</div>
+<router-outlet />

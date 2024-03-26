@@ -1,0 +1,26 @@
+<p>register works!</p>
+
+<div>
+    @if(loading){
+        <p>Loading...</p>
+    }
+    @else {
+        <p>{{error}}</p>
+    }
+</div>
+
+<form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+    <label>Username</label>
+    <input type="text" formControlName="username" placeholder="Username">
+    <label>Firstname</label>
+    <input type="text" formControlName="firstname" placeholder="Firstname">
+    <label>Lastname</label>
+    <input type="text" formControlName="lastname" placeholder="Lastname">
+    <label>Email</label>
+    <input type="text" formControlName="email" placeholder="Email">
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="Password">
+    <label>Confirm Password</label>
+    <input type="password" formControlName="password_confirmation" placeholder="Confirm Password">
+    <button type="submit" [disabled]="!registerForm.valid">Register</button>
+</form>
