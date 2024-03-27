@@ -4,6 +4,7 @@ import { Subject, catchError, Observable, throwError, BehaviorSubject, map } fro
 import { LoginDetails } from '../interfaces/login-details';
 import { User } from '../interfaces/user';
 import { Register } from '../interfaces/register';
+import { LoggedInUser } from '../interfaces/logged-in-user';
 
 interface ResultData {
   token: string,
@@ -20,12 +21,13 @@ interface RegisterDetails {
 
 export class AuthService {
 
-  private signedIn = new BehaviorSubject<boolean>(false);
+  private signedIn = new BehaviorSubject<LoggedInUser>({
+    user: undefined,
+    loginState: false
+  });
   signedIn$ = this.signedIn.asObservable();
 
   private baseUrl = 'http://127.0.0.1:8000/api/';
-
-  // private token: string | null = null;
 
   userInfo: User | null = null;
   private token: string = '';
@@ -39,8 +41,12 @@ export class AuthService {
 
   constructor(private http:HttpClient) {}
 
-  private updateLoginState(loginState: boolean) {
+  updateLoginState(loginState: LoggedInUser) {
     this.signedIn.next(loginState);
+  }
+
+  loginStatus() {
+    return this.signedIn.value.loginState;
   }
 
   register(register: Register): Observable<ResultData>{
@@ -56,14 +62,17 @@ export class AuthService {
           this.token = result.token;
           this.userName = this.userInfo.username;
           console.log(result);
-          this.updateLoginState(true);
+          this.updateLoginState({
+            user: result.user,
+            loginState: true
+          });
           this.setUserName(result.user.username);
           this.httpOptions.headers = this.httpOptions.headers.set('Authorization', "Bearer " + result.token);
           return true;
         }),
         catchError(error => {
           console.error('Login failed: ', error);
-          return throwError('Invalid email or password. Please try again!');
+          return throwError(() => new Error('Invalid email or password. Please try again!'));
         })
       );
   }
@@ -72,7 +81,10 @@ export class AuthService {
     this.http.post<ResultData>(this.baseUrl+'logout', {}, this.httpOptions).pipe(
       catchError(this.handleError)).subscribe(result => {
         console.log(result);
-        this.updateLoginState(false);
+        this.updateLoginState({
+          user: undefined,
+          loginState: false
+        });
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', "Bearer ");
       })
   }

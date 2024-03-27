@@ -2,24 +2,42 @@
 
 <nav>
   <ul>
-      @if (auth.signedIn$ | async){
-        <li>
-          <p>{{auth.userName}}</p>
-        </li>
-        <li>
-          <button (click)="logout()">Logout</button>
-        </li>
-      }
-      @else {
-        <li>
-          <a routerLink="/signin" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
-        </li>
-        <li>
-          <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a>
-        </li>
-      }
+    <li>
+      <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+    </li>
+    <li>
+      <a routerLink="/recipesearch" routerLinkActive="active" ariaCurrentWhenActive="page">Search</a>
+    </li>
+    @if ((signedIn$ | async)?.loginState){
+      <li>
+        <a routerLink="/profile" routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a>
+      </li>
+      <li>
+        <a routerLink="/userlists" routerLinkActive="active" ariaCurrentWhenActive="page">My lists</a>
+      </li>
+      <li>
+        <p>{{auth.userName}}</p>
+      </li>
+      <li>
+        <button (click)="logout()">Logout</button>
+      </li>
+    }
+    @else {
+      <li>
+        <a routerLink="/signin" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
+      </li>
+      <li>
+        <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a>
+      </li>
+    }
   </ul>
 </nav>
-<div>
-</div>
+
+<hr>
+
 <router-outlet />
+
+<footer>
+  <hr>
+  <h3>Trademark 2024</h3> 
+</footer>

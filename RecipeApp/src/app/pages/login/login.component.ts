@@ -26,15 +26,16 @@ export class LoginComponent {
   handleSubmit(){
     const loginData = this.loginForm.value;
     this.loading = true;
-    this.auth.login(loginData as LoginDetails).subscribe(
-      () => {
+    this.auth.login(loginData as LoginDetails).subscribe({
+      next: () => {
         this.loading = false;
-        this.router.navigate(['/recipes']);
+        this.router.navigate(['']);
       },
-      (error) => {
+      error: (error) => {
         this.loading = false;
         console.error('Login error: ', error);
         this.error = "Invalid email or password. Please try again!";
-      });
+      }
+    });
   }
 }

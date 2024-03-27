@@ -10,17 +10,17 @@
 </div>
 
 <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
-    <label>Username</label>
-    <input type="text" formControlName="username" placeholder="Username">
-    <label>Firstname</label>
-    <input type="text" formControlName="firstname" placeholder="Firstname">
-    <label>Lastname</label>
-    <input type="text" formControlName="lastname" placeholder="Lastname">
-    <label>Email</label>
-    <input type="text" formControlName="email" placeholder="Email">
-    <label>Password</label>
-    <input type="password" formControlName="password" placeholder="Password">
-    <label>Confirm Password</label>
-    <input type="password" formControlName="password_confirmation" placeholder="Confirm Password">
+    <label>Username</label><br>
+    <input type="text" formControlName="username" placeholder="Username"><br>
+    <label>Firstname</label><br>
+    <input type="text" formControlName="firstname" placeholder="Firstname"><br>
+    <label>Lastname</label><br>
+    <input type="text" formControlName="lastname" placeholder="Lastname"><br>
+    <label>Email</label><br>
+    <input type="text" formControlName="email" placeholder="Email"><br>
+    <label>Password</label><br>
+    <input type="password" formControlName="password" placeholder="Password"><br>
+    <label>Confirm Password</label><br>
+    <input type="password" formControlName="password_confirmation" placeholder="Confirm Password"><br>
     <button type="submit" [disabled]="!registerForm.valid">Register</button>
 </form>

@@ -16,7 +16,7 @@ export class RegisterComponent {
   registerForm = new FormGroup({
     username: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(1),
         Validators.maxLength(25)
       ]),
     firstname: new FormControl('', [
@@ -54,7 +54,7 @@ export class RegisterComponent {
       },
       (error) => {
         console.error('Registration failed: ', error);
-        this.loading = true;
+        this.loading = false;
         this.error = "Registration failed. Please try again.";
       }
     )

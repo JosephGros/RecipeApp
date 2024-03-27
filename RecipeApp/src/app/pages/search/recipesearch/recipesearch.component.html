@@ -1,0 +1,50 @@
+<div>
+    @if(loading){
+        <p>Loading...</p>
+    }
+    @else {
+        <p>{{error}}</p>
+    }
+</div>
+
+<input type="text" [(ngModel)]="searchterm" placeholder="Search" class="border-solid border-2 border-sky-500 rounded-md"><br>
+
+<label for="cuisine">Cuisine type</label><br>
+<select id="cuisine" [(ngModel)]="cuisineType" class="border-solid border-2 border-sky-500 rounded-md">
+@for(cuisineType of cuisineTypes; track cuisineType){
+    <option [value]="cuisineType">{{cuisineType}}</option>
+}
+</select><br>
+
+<label for="meal">Meal type</label><br>
+<select id="meal" [(ngModel)]="mealType" class="border-solid border-2 border-sky-500 rounded-md">
+    @for(mealType of mealTypes; track cuisineType){
+        <option [value]="mealType">{{mealType}}</option>
+    }
+</select><br>
+
+<label for="dish">Dish type</label><br>
+<select id="dish" [(ngModel)]="dishType" class="border-solid border-2 border-sky-500 rounded-md">
+    @for(dishType of dishTypes; track dishType){
+        <option [value]="dishType">{{dishType}}</option>
+    }
+</select><br>
+
+<label for="co2">co2 Emissions class</label><br>
+<select id="co2" [(ngModel)]="co2" class="border-solid border-2 border-sky-500 rounded-md">
+    @for(co2Class of co2Classes; track co2Class){
+        <option [value]="co2Class">{{co2Class}}</option>
+    }
+</select><br>
+
+<button (click)="searchRecipe()">Get Recipes</button>
+
+@for(recipe of recipes; track recipe){
+    <article>
+        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
+        <h3>{{recipe.label}}</h3>
+        <p>Time to cook: {{recipe.totalTime}} min.</p>
+        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
+        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
+    </article>
+}

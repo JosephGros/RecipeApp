@@ -1,1 +1,11 @@
-<p>recipe works!</p>
+<button (click)="backBtn()">Back</button>
+
+
+@if(recipeId){
+    <img src="{{recipeId.image}}" alt="Image of {{recipeId.label}}">
+    <p>{{recipeId.label}}</p>
+    <p>{{recipeId.totalTime}}</p>
+    <p>{{recipeId.co2EmissionsClass}}</p>
+    <p>{{recipeId.ingredientLines}}</p>
+    <p>{{recipeId.healthLabels}}</p>
+}
