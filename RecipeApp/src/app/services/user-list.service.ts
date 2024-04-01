@@ -5,5 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserListService {
 
+  private baseUrl = 'https://secondbreakfastapi.onrender.com/api/';
+
   constructor() { }
 }
