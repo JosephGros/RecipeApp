@@ -5,6 +5,7 @@ import { LoginDetails } from '../interfaces/login-details';
 import { User } from '../interfaces/user';
 import { Register } from '../interfaces/register';
 import { LoggedInUser } from '../interfaces/logged-in-user';
+import { Router } from '@angular/router';
 
 interface ResultData {
   token: string,
@@ -35,11 +36,13 @@ export class AuthService {
 
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json', 
     }),
   }
 
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, private router: Router) {
+    const checkToken = sessionStorage.getItem('token');
+  }
 
   updateLoginState(loginState: LoggedInUser) {
     this.signedIn.next(loginState);
@@ -66,7 +69,10 @@ export class AuthService {
             user: result.user,
             loginState: true
           });
+          sessionStorage.setItem('token', this.token);
+          sessionStorage.setItem('sessionUser', JSON.stringify(this.userInfo));
           this.setUserName(result.user.username);
+          this.setUserInfo(result.user);
           this.httpOptions.headers = this.httpOptions.headers.set('Authorization', "Bearer " + result.token);
           return true;
         }),
@@ -85,10 +91,29 @@ export class AuthService {
           user: undefined,
           loginState: false
         });
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('sessionUser');
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', "Bearer ");
+        this.router.navigate(['']);
       })
   }
 
+  isLoggedIn() {
+    const checkToken = sessionStorage.getItem('token');
+    const checkUser = sessionStorage.getItem('sessionUser');
+    if (checkToken && checkUser){
+      this.token = checkToken;
+      this.updateLoginState({
+        user: JSON.parse(checkUser),
+        loginState: true
+      });
+      this.setUserInfo(JSON.parse(checkUser));
+      this.token = checkToken;
+      this.httpOptions.headers = this.httpOptions.headers.set('Authorization', "Bearer " + checkToken);
+    }
+    console.log (checkToken);
+    console.log (checkUser);
+  }
 
   getCurrentToken(): string | null {
     return this.token;
@@ -96,6 +121,11 @@ export class AuthService {
 
   setUserName(name: string){
     this.userName = name;
+  }
+
+  setUserInfo(info: any){
+    this.userInfo = info;
+    return this.userInfo;
   }
 
   //add so the user uses controllers in backend for adding end deleting and creating lists and recipes!!!!

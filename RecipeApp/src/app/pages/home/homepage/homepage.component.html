@@ -1,1 +1,31 @@
 <p>homepage works!</p>
+
+@for(recipe of cuisineTypeRecipes; track recipe){
+    <article>
+        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
+        <h3>{{recipe.label}}</h3>
+        <p>Time to cook: {{recipe.totalTime}} min.</p>
+        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
+        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
+    </article>
+}
+
+@for(recipe of mealTypeRecipes; track recipe){
+    <article>
+        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
+        <h3>{{recipe.label}}</h3>
+        <p>Time to cook: {{recipe.totalTime}} min.</p>
+        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
+        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
+    </article>
+}
+
+@for(recipe of dishTypeRecipes; track recipe){
+    <article>
+        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
+        <h3>{{recipe.label}}</h3>
+        <p>Time to cook: {{recipe.totalTime}} min.</p>
+        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
+        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
+    </article>
+}

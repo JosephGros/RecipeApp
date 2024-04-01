@@ -1,1 +1,6 @@
-<p>profile works!</p>
+<h1>Profile</h1>
+
+<h3>Username: {{user.username}}</h3>
+<p>Name: {{(user.firstname + ' ' + user.lastname)}}</p>
+<p>Email: {{user.email}}</p>
+<p>Account created: {{user.created_at | date}}</p>

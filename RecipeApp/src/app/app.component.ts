@@ -35,6 +35,10 @@ export class AppComponent {
     this.signedIn$ = this.auth.signedIn$;
   }
 
+  ngOnInit(){
+    this.auth.isLoggedIn();
+  }
+
   logout(){
     this.auth.logOut();
   }

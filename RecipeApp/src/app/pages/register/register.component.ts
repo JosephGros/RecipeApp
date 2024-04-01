@@ -46,18 +46,18 @@ export class RegisterComponent {
   registerSubmit() {
     const registerData = this.registerForm.value;
     this.loading = true;
-    this.auth.register(registerData as Register).subscribe(
-      (result) => {
+    this.auth.register(registerData as Register).subscribe({
+      next: (result) => {
         console.log('Registration successful!', result);
         this.loading = false;
         this.router.navigate(['/signin']);
       },
-      (error) => {
+      error: (error) => {
         console.error('Registration failed: ', error);
         this.loading = false;
         this.error = "Registration failed. Please try again.";
       }
-    )
+    });
   }
 
 }
