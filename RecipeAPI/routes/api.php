@@ -37,6 +37,6 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('update/list/{id}', [UserlistController::class, 'update']);
     Route::post('delete/list/{id}', [UserlistController::class, 'destroy']);
 
-    Route::post('add/recipe/{id}', [RecipeController::class, 'addRecipe']);
+    Route::post('add/recipe', [RecipeController::class, 'addRecipe']);
     Route::post('remove/recipe/{listId}/{recipeId}', [RecipeController::class, 'removeRecipe']);
 });

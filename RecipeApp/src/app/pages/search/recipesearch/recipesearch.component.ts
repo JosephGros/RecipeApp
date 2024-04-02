@@ -72,7 +72,8 @@ export class RecipesearchComponent {
       queryParamsHandling: 'merge'
     });
 
-    this.recipeService.getRecipes(this.searchterm, this.cuisineType, this.mealType, this.dishType, this.co2).subscribe((result) => {
+    this.recipeService.getRecipes(this.searchterm, this.cuisineType, this.mealType, this.dishType, this.co2).subscribe({
+      next: (result) => {
       console.log(result);
       let recipes: Recipe[] = [];
       recipes = result.hits.map((item: {recipe: {label: any; image: any; ingredientLines: any; totalTime: any; healthLabels: any; co2EmissionsClass: any; }; _links: { self: { href: any; }; }; }) => {
@@ -95,11 +96,12 @@ export class RecipesearchComponent {
         this.error = "";
       }
     }, 
-    (error) => {
+    error: (error) => {
       console.error('Error fetching recipes: ', error);
       this.loading = false;
       this.error = "Failed to fetch recipes. Please try again later.";
-    });
+    }
+  });
   }
 
 }

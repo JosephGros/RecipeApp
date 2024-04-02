@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserListService } from '../../../services/user-list.service';
 
 @Component({
   selector: 'app-userlist',
@@ -9,4 +10,7 @@ import { Component } from '@angular/core';
 })
 export class UserlistComponent {
 
+  constructor(list: UserListService){}
+
+  
 }
