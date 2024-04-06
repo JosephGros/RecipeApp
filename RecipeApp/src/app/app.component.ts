@@ -51,5 +51,7 @@ export class AppComponent {
 
   menuDropdown(){
     this.dropdown = !this.dropdown;
+    const test = this.auth.getCurrentToken();
+    console.log(test);
   }
 }
