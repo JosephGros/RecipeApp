@@ -28,8 +28,7 @@ export class AuthService {
   });
   signedIn$ = this.signedIn.asObservable();
 
-  private baseUrl = 'http://localhost:8000/api/';
-  // https://secondbreakfastapi.onrender.com/api/
+  private baseUrl = 'https://secondbreakfastapi.onrender.com/api/';
 
   userInfo: User | null = null;
   private token: string = '';

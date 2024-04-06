@@ -10,7 +10,7 @@ import { Listcontent } from '../interfaces/listcontent';
 })
 export class UserListService {
 
-  private baseUrl = 'http://127.0.0.1:8000/api/';
+  private baseUrl = 'https://secondbreakfastapi.onrender.com/api/';
 
   private httpOptions = {
     headers: new HttpHeaders({
