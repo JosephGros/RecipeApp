@@ -10,7 +10,8 @@ import { Location } from '@angular/common';
 
 interface ResultData {
   token: string,
-  user: User
+  user: User,
+  username: string
 }
 
 interface RegisterDetails {
@@ -62,7 +63,7 @@ export class AuthService {
         map((result: ResultData) => {
           this.userInfo = result.user;
           this.token = result.token;
-          this.userName = this.userInfo.username;
+          this.userName = result.username;
           console.log(result);
           this.updateLoginState({
             user: result.user,

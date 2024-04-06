@@ -14,7 +14,7 @@
           @if ((signedIn$ | async)?.loginState){
             <li class="justify-center content-center mx-2 mb-1 text-sm">
               <p>Logged in as</p>
-              <p class=" self-center">{{username}}</p>
+              <p class=" self-center">{{auth.userName}}</p>
             </li>
             <hr class="border-t my-2 border-cyan-50">
           }
