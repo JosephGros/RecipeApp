@@ -13,6 +13,8 @@
             <br>
             <input type="password" formControlName="password_confirmation" placeholder="Confirm Password" class="m-1 border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700">
             <br>
+            <p class="text-xs">Password must contain atleast 8 characters</p>
+            <br>
             <div class="p-1 rounded-md flex flex-row">
                 <button type="submit" [disabled]="!registerForm.valid" class="bg-cyan-800 text-cyan-50 h-9 w-20 mx-2 font-semibold hover:bg-cyan-700 active:bg-cyan-800 focus:ring-2 focus:ring-cyan-700 self-center rounded-md p-1">
                     Register
