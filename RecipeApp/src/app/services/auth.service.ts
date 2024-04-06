@@ -28,7 +28,8 @@ export class AuthService {
   });
   signedIn$ = this.signedIn.asObservable();
 
-  private baseUrl = 'https://secondbreakfastapi.onrender.com/api/';
+  private baseUrl = 'http://localhost:8000/api/';
+  // https://secondbreakfastapi.onrender.com/api/
 
   userInfo: User | null = null;
   private token: string = '';
@@ -40,9 +41,7 @@ export class AuthService {
     }),
   }
 
-  constructor(private http:HttpClient, private router: Router) {
-    const checkToken = sessionStorage.getItem('token');
-  }
+  constructor(private http:HttpClient, private router: Router) {}
 
   updateLoginState(loginState: LoggedInUser) {
     this.signedIn.next(loginState);

@@ -1,16 +1,36 @@
-<p>homepage works!</p>
+<div class="flex flex-col justify-center content-center h-44">
+    <h1 class="font-eaglelake text-2xl text-cyan-950 self-center">Welcome to Second Breakfast!</h1>
+    <br>
+    <p class="font-eaglelake text-lg text-cyan-950 self-center">We offer the best and largest sortiment of recipes.</p><br>
+</div>
 
-@for(recipe of cuisineTypeRecipes; track recipe){
-    <article>
-        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
-        <h3>{{recipe.label}}</h3>
-        <p>Time to cook: {{recipe.totalTime}} min.</p>
-        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
-        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
-    </article>
-}
+<div class="flex flex-col justify-center content-center h-16">
+    <h2 class="font-eaglelake text-xl text-cyan-950 self-center">{{cuisineType}}</h2>
+    <br>
+</div>
 
-@for(recipe of mealTypeRecipes; track recipe){
+<div class="flex justify-center content-center">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        @for(recipe of cuisineTypeRecipes; track recipe){
+            <article class="bg-cyan-800 w-52 rounded-md drop-shadow-lg border-4 border-cyan-800 lg:hover:scale-105">
+            <a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">
+                <img src="{{recipe.image}}" alt="Image of {{recipe.label}}" class="bg-cyan-200 rounded-md">
+                <div class="p-2 text-wrap text-balance">
+                    <h3 class="font-semibold text-lg text-cyan-50">{{recipe.label}}</h3>
+                    <p class="text-sm text-cyan-50">Time to cook: {{recipe.totalTime}} min.</p>
+                    <p class="text-sm text-cyan-50">co 2 Emissions: {{recipe.co2EmissionsClass}}</p>
+                    <br>
+                    <p class="font-medium text-sm"><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]" class="text-cyan-100 hover:text-cyan-200">
+                        More Info
+                    </a></p>
+                </div>
+            </a>
+            </article>
+        }
+    </div>
+</div>
+
+<!-- @for(recipe of mealTypeRecipes; track recipe){
     <article>
         <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
         <h3>{{recipe.label}}</h3>
@@ -28,4 +48,4 @@
         <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
         <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
     </article>
-}
+} -->

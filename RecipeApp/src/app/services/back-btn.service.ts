@@ -11,4 +11,8 @@ export class BackBtnService {
   backFn() {
     this.location.back();
   }
+
+  reload(){
+    this.location.forward();
+  }
 }

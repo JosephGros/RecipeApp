@@ -2,54 +2,127 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Getlists } from '../interfaces/getlists';
 import { Title } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { Listcontent } from '../interfaces/listcontent';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserListService {
 
-  private baseUrl = 'https://secondbreakfastapi.onrender.com/api/';
+  private baseUrl = 'http://127.0.0.1:8000/api/';
 
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json', 
-    }),
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    })
   }
 
   constructor(private http: HttpClient) { }
 
-  allLists(userId: Getlists){
-    let url = this.baseUrl+'lists' + userId;
-    return this.http.post<Getlists>(url, this.httpOptions);
+  allLists(userId: any): Observable<any>{
+    let url = this.baseUrl+'lists/' + userId;
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Request headers: ', this.httpOptions.headers);
+      return this.http.post(url, {}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  createList(create: Getlists){
-    let url = this.baseUrl+'create/list' + '&title=' + create.title + '&user_id=' + create.userId;
-    return this.http.post(url, this.httpOptions);
+  createList(title="", userId=""): Observable<any> {
+    let url = this.baseUrl+'create/list/' + title + '/' + userId; 
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Request headers: ', this.httpOptions.headers);
+      return this.http.post(url, {}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  showList(show: Getlists){
-    let url = this.baseUrl+'list/recipes/' + show.listId;
-    return this.http.post(url, this.httpOptions);
+  showList(listId=""): Observable<any>{
+    let url = this.baseUrl+'list/recipes/' + listId;
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Update request headers: ', this.httpOptions.headers);
+      return this.http.post(url, {}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  updateList(update: Getlists){
-    let url = this.baseUrl+'update/list/' + update.listId;
-    return this.http.post(url, this.httpOptions);
+  updateList(title="", listId="", userId=""): Observable<any>{
+    let url = this.baseUrl+'update/list/' + title + '/' + listId + '/' + userId;
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Update request headers: ', this.httpOptions.headers);
+      return this.http.post(url, { title: title, user_id: userId}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  deleteList(listDelete: Getlists){
-    let url = this.baseUrl+'delete/list/' + listDelete.listId;
-    return this.http.post(url, this.httpOptions);
+  deleteList(listId: any): Observable<any>{
+    let url = this.baseUrl+'delete/list/' + listId;
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Delete request headers: ', this.httpOptions.headers);
+      console.log(this.http.post(url, {}, this.httpOptions));
+      return this.http.post(url, {}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  addRecipe(recipeAdd: Getlists){
-    let url = this.baseUrl+'add/recipe' + '&recipeId=' + recipeAdd.recipeId + '&userlists_id=' + recipeAdd.listId;
-    return this.http.post(url, this.httpOptions);
+  addRecipe(
+    userlists_id = "", recipeId = "", recipeLabel = "", recipeIngredientLines = "",
+    recipeTotalTime: number, recipeHealthLabels = "", recipeco2Emissions = ""): Observable<any>{
+    let url = this.baseUrl+'add/recipe';
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Add recipe request headers: ', this.httpOptions.headers);
+      console.log(this.http.post(url, {
+          userlists_id: userlists_id,
+          recipeId: recipeId,
+          recipeLabel: recipeLabel,
+          recipeIngredientLines: recipeIngredientLines,
+          recipeTotalTime: recipeTotalTime, 
+          recipeHealthLabels: recipeHealthLabels,
+          recipeco2Emissions: recipeco2Emissions,
+      }, this.httpOptions));
+      return this.http.post(url, {
+            userlists_id: userlists_id,
+            recipeId: recipeId,
+            recipeLabel: recipeLabel,
+            recipeIngredientLines: recipeIngredientLines,
+            recipeTotalTime: recipeTotalTime, 
+            recipeHealthLabels: recipeHealthLabels,
+            recipeco2Emissions: recipeco2Emissions,
+      }, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 
-  removeRecipe(recipeRemove: Getlists){
-    let url = this.baseUrl+'add/recipe' + '&listId=' + recipeRemove.listId + '&recipeId=' + recipeRemove.recipeId;
-    return this.http.post(url, this.httpOptions);
+  removeRecipe(id ="", recipeId =""): Observable<any> {
+    let url = this.baseUrl+'remove/recipe/' + id + '/' + recipeId;
+    let token = sessionStorage.getItem('token');
+    if(token){
+      console.log('Remove recipe request headers: ', this.httpOptions.headers);
+      console.log(this.http.post(url, {}, this.httpOptions));
+      return this.http.post(url, {}, this.httpOptions);
+    } else {
+      console.error('Token not found in session storage.');
+      return of(null);
+    }
   }
 }

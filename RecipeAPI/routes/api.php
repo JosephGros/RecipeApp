@@ -31,12 +31,12 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     
     // TODO: CRUD for recipe lists
 
-    Route::post('create/list', [UserlistController::class, 'store']);
+    Route::post('create/list/{title}/{user_id}', [UserlistController::class, 'store']);
     Route::post('lists/{id}', [UserlistController::class, 'index']);
     Route::post('list/recipes/{id}', [UserlistController::class, 'showRecipes']);
-    Route::post('update/list/{id}', [UserlistController::class, 'update']);
+    Route::post('update/list/{title}/{listId}/{user_id}', [UserlistController::class, 'update']);
     Route::post('delete/list/{id}', [UserlistController::class, 'destroy']);
 
     Route::post('add/recipe', [RecipeController::class, 'addRecipe']);
-    Route::post('remove/recipe/{listId}/{recipeId}', [RecipeController::class, 'removeRecipe']);
+    Route::post('remove/recipe/{id}/{recipeId}', [RecipeController::class, 'removeRecipe']);
 });

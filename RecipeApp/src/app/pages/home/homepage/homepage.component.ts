@@ -47,8 +47,8 @@ export class HomepageComponent {
     this.dishType = this.dishTypes[randomDishType];
 
     this.searchRecipes(this.cuisineType, '', '', 'cuisineTypeRecipes');
-    this.searchRecipes('', this.mealType, '', 'mealTypeRecipes');
-    this.searchRecipes('', '', this.dishType, 'dishTypeRecipes');
+    // this.searchRecipes('', this.mealType, '', 'mealTypeRecipes');
+    // this.searchRecipes('', '', this.dishType, 'dishTypeRecipes');
   }
 
   searchRecipes(cuisineType: string, mealType: string, dishType: string, searchArray: 'cuisineTypeRecipes' | 'mealTypeRecipes' | 'dishTypeRecipes'){

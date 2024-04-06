@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('userlistpivots', function (Blueprint $table) {
             $table->id();
             $table->foreignId('userlists_id')->constrained()->onDelete('cascade');
-            $table->string('recipe');
+            $table->string('recipeId');
+            $table->string('recipeLabel');
+            $table->text('recipeIngredientLines');
+            $table->string('recipeTotalTime');
+            $table->text('recipeHealthLabels');
+            $table->string('recipeco2Emissions');
             $table->timestamps();
         });
     }

@@ -1,6 +1,11 @@
-<h1>Profile</h1>
+<h1 class="text-4xl font-semibold mb-5">Profile</h1>
 
-<h3>Username: {{user.username}}</h3>
-<p>Name: {{(user.firstname + ' ' + user.lastname)}}</p>
-<p>Email: {{user.email}}</p>
-<p>Account created: {{user.created_at | date}}</p>
+<div class="bg-cyan-800 w-80 rounded-md drop-shadow-lg border-4 border-cyan-800 text-cyan-50 p-2">
+    <h3> <strong>Username:</strong> {{user.username}}</h3>
+    <br>
+    <p><strong>Name:</strong> {{(user.firstname + ' ' + user.lastname)}}</p>
+    <br>
+    <p><strong>Email:</strong> {{user.email}}</p>
+    <br>
+    <p><strong>Account created: </strong> {{user.created_at | date}}</p>
+</div>

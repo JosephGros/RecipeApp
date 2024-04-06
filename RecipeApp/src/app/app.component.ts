@@ -28,18 +28,28 @@ import { LoggedInUser } from './interfaces/logged-in-user';
 
 export class AppComponent {
   title = 'Second Breakfast';
+  dropdown = false;
 
   signedIn$: Observable<LoggedInUser>;
+  username: any;
+  user: any;
 
   constructor(public auth: AuthService) {
     this.signedIn$ = this.auth.signedIn$;
+    this.username = this.auth.userInfo?.username;
   }
 
   ngOnInit(){
     this.auth.isLoggedIn();
+    this.user = this.auth.setUserInfo(this.auth.userInfo);
+    this.username = this.user.username;
   }
 
   logout(){
     this.auth.logOut();
+  }
+
+  menuDropdown(){
+    this.dropdown = !this.dropdown;
   }
 }

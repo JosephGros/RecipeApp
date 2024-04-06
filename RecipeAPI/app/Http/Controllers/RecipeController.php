@@ -9,13 +9,26 @@ class RecipeController extends Controller
 {
     public function addRecipe(Request $request){
         $request->validate([
-            'recipeId' => 'required|string',
-            'userlists_id' => 'required|string'
+            'userlists_id' => 'required|string',
+            'recipeId' => 'required',
+            'recipeLabel' => 'required|string', 
+            'recipeIngredientLines' => 'required|array',
+            'recipeIngredientLines.*' => 'string',
+            'recipeTotalTime' => 'required', 
+            'recipeHealthLabels' => 'required|array', 
+            'recipeHealthLabels.*' => 'string', 
+            'recipeco2Emissions' => 'required|string'
         ]);
 
         $addRecipe = new Userlistpivot();
-        $addRecipe->recipe = $request->recipeId;
         $addRecipe->userlists_id = $request->userlists_id;
+        $addRecipe->recipeId = $request->recipeId;
+        $addRecipe->recipeLabel = $request->recipeLabel;
+        $addRecipe->recipeIngredientLines = json_encode($request->recipeIngredientLines);
+        $addRecipe->recipeTotalTime = $request->recipeTotalTime;
+        $addRecipe->recipeHealthLabels = json_encode($request->recipeHealthLabels);
+        $addRecipe->recipeco2Emissions = $request->recipeco2Emissions;
+        
 
         if($addRecipe->save()){
             return response()->json(['message' => 'Recipe added!'
@@ -26,13 +39,13 @@ class RecipeController extends Controller
         }
     }
 
-    public function removeRecipe(string $listId, string $recipeId){
+    public function removeRecipe(string $id, string $recipeId){
 
-        $userlist = Userlistpivot::find($listId);
+        $userlist = Userlistpivot::find($id);
         
         if($userlist){
 
-            $recipe = $userlist->where('recipe', $recipeId)->first();
+            $recipe = $userlist->where('recipeId', $recipeId)->first();
 
             if($recipe){
                 $recipe->delete();

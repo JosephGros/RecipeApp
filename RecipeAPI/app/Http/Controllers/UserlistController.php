@@ -27,16 +27,11 @@ class UserlistController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string',
-            'user_id' => 'required|string'
-        ]);
-        
+    public function store(string $title, string $user_id)
+    {   
         $userL = new Userlist();
-        $userL->title = $request->title;
-        $userL->user_id = $request->user_id;
+        $userL->title = $title;
+        $userL->user_id = $user_id;
 
         if($userL->save()){
             return response()->json(['message' => 'List created!'
@@ -66,22 +61,29 @@ class UserlistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $title, string $listId, string $user_id)
     {
         $request->validate([
-            'title' => 'required|string'
+            'title' => 'required|string',
+            'user_id' => 'required'
         ]);
-        
-        $userL = new Userlist();
-        $userL->title = $request->title;
 
-        if($userL->save()){
-            return response()->json(['message' => 'List updated!'
-        ], 200);
-        } else {
-            return response()->json(['message' => 'Something went wrong.'
-        ], 500);
+        $userList = Userlist::find($listId);
+
+        if(!$userList){
+            return response()->json(['message' => 'List not found.'], 404);
         }
+
+            $userList->title = $request->input('title', $userList->title);
+            $userList->user_id = $request->input('user_id', $userList->user_id);
+    
+            if($userList->save()){
+                return response()->json(['message' => 'List updated!'
+            ], 200);
+            } else {
+                return response()->json(['message' => 'Something went wrong.'
+            ], 500);
+            }
     }
 
     /**

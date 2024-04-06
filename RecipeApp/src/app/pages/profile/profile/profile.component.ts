@@ -21,5 +21,4 @@ export class ProfileComponent {
     this.auth.isLoggedIn();
   }
 
-  
 }

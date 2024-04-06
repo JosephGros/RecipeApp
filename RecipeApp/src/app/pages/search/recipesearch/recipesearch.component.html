@@ -1,50 +1,108 @@
-<div>
-    @if(loading){
-        <p>Loading...</p>
-    }
-    @else {
-        <p>{{error}}</p>
-    }
+<div class="flex justify-center">
+    <div class="self-center">
+        <input type="text" [(ngModel)]="searchterm" placeholder="Search" class="border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700 h-7">
+        <button (click)="filterDropdown()" type="button" class="bg-cyan-800 text-cyan-50 h-7 w-20 mx-1 font-semibold hover:bg-cyan-700 active:bg-cyan-800 focus:ring-2 focus:ring-cyan-700 self-center rounded-md">
+            Filter
+        </button>
+        <button (click)="searchRecipe(); noResults()" class="bg-cyan-800 text-cyan-50 h-7 w-20 mx-1 font-semibold hover:bg-cyan-700 active:bg-cyan-800 focus:ring-2 focus:ring-cyan-700 self-center rounded-md">
+            Search
+        </button>
+        <br>
+    </div>
 </div>
 
-<input type="text" [(ngModel)]="searchterm" placeholder="Search" class="border-solid border-2 border-sky-500 rounded-md"><br>
 
-<label for="cuisine">Cuisine type</label><br>
-<select id="cuisine" [(ngModel)]="cuisineType" class="border-solid border-2 border-sky-500 rounded-md">
-@for(cuisineType of cuisineTypes; track cuisineType){
-    <option [value]="cuisineType">{{cuisineType}}</option>
+@if(dropdown) {
+    <label for="cuisine">Cuisine type</label><br>
+    <select id="cuisine" [(ngModel)]="cuisineType" class="border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700 h-6">
+    @for(cuisineType of cuisineTypes; track cuisineType){
+        <option [value]="cuisineType">{{cuisineType}}</option>
+    }
+    </select><br>
+    
+    <label for="meal">Meal type</label><br>
+    <select id="meal" [(ngModel)]="mealType" class="border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700 h-6">
+        @for(mealType of mealTypes; track mealType){
+            <option [value]="mealType">{{mealType}}</option>
+        }
+    </select><br>
+    
+    <label for="dish">Dish type</label><br>
+    <select id="dish" [(ngModel)]="dishType" class="border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700 h-6">
+        @for(dishType of dishTypes; track dishType){
+            <option [value]="dishType">{{dishType}}</option>
+        }
+    </select><br>
+    
+    <label for="co2">co2 Emissions class</label><br>
+    <select id="co2" [(ngModel)]="co2" class="border-solid border-2 border-sky-500 rounded-md pl-1 self-center text-cyan-950 focus:outline-none focus:border-cyan-700 focus:ring-cyan-700 h-6">
+        @for(co2Class of co2Classes; track co2Class){
+            <option [value]="co2Class">{{co2Class}}</option>
+        }
+    </select><br>
 }
-</select><br>
+<br>
+<div class="flex justify-center">
+    <div class="self-center">
+        @if(loading){
+            <div class="flex flex-row">
+                <svg aria-hidden="true" class="w-4 h-4 text-gray-200 animate-spin dark:text-cyan-900 fill-cyan-500 self-center" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                </svg>
+                <p class="text-xl self-center mx-2">Loading</p>
+            </div>
+        }
+        @else {
+            <p>{{error}}</p>
+        }
+    </div>
+</div>
 
-<label for="meal">Meal type</label><br>
-<select id="meal" [(ngModel)]="mealType" class="border-solid border-2 border-sky-500 rounded-md">
-    @for(mealType of mealTypes; track cuisineType){
-        <option [value]="mealType">{{mealType}}</option>
-    }
-</select><br>
+<div class="flex justify-center content-center">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        @for(recipeDropdown of recipesWithDropdown; track recipeDropdown){
+            <article class="bg-cyan-800 w-52 rounded-md drop-shadow-lg border-4 border-cyan-800">
+                <img src="{{recipeDropdown.recipe.image}}" alt="Image of {{recipeDropdown.recipe.label}}" class="bg-cyan-200 rounded-md">
+                <div class="p-2 text-wrap text-balance">
+                    <h3 class="font-semibold text-lg text-cyan-50">{{recipeDropdown.recipe.label}}</h3>
+                    <p class="text-sm text-cyan-50">Time to cook: {{recipeDropdown.recipe.totalTime}} min.</p>
+                    <p class="text-sm text-cyan-50">co2 Emissions: {{recipeDropdown.recipe.co2EmissionsClass}}</p>
+                    <br>
+                    <p class="font-medium text-sm"><a [routerLink]="['/recipe', recipeDropdown.recipe.selfref | recipeidformatter]" class="text-cyan-100 hover:text-cyan-200">
+                        More Info
+                    </a></p>
+                </div>
+                @if(signedIn$){
+                    <button (click)="toggleListOptions(recipeDropdown)" class="text-xs font-semibold bg-cyan-500 text-cyan-50 h-5 w-10 mx-1 hover:bg-cyan-700 active:bg-cyan-800 focus:ring-2 focus:ring-cyan-700 self-center rounded-md p-1">
+                        List +
+                    </button>
+                    <!-- @if(inList){
+                        <button (click)="toggleListOptions(recipeDropdown); toggleRemoveOptions()">List -</button>
+                    } -->
+                    @if(recipeDropdown.listDropdown){
+                        <select [(ngModel)]="selectedListId">
+                            @if(!removeDropdown){
+                                @for(item of listsWithoutRecipe; track item){
+                                    <option [value]="item.id">{{item.title}}</option>
+                                }
+                            }
+                            @if(removeDropdown){
+                                @for(item of listsWithRecipe; track item; let i = $index){
+                                    <option [value]="content![i].id">{{item.title}}</option>
+                                }
+                            }
+                        </select>
+                        
+                        <button (click)="recipeAdd(selectedListId, recipeDropdown.recipe); toggleListOptions(recipeDropdown)">Add Recipe</button>
+                        
+                        <!-- @if(inList){
+                        <button (click)="recipeRemove(selectedListId, recipeDropdown.recipe.selfref); toggleListOptions(recipeDropdown)">Remove Recipe</button>
+                        } -->
+                    }
+                }
+            </article>
+        }
+    </div>
+</div>    
 
-<label for="dish">Dish type</label><br>
-<select id="dish" [(ngModel)]="dishType" class="border-solid border-2 border-sky-500 rounded-md">
-    @for(dishType of dishTypes; track dishType){
-        <option [value]="dishType">{{dishType}}</option>
-    }
-</select><br>
-
-<label for="co2">co2 Emissions class</label><br>
-<select id="co2" [(ngModel)]="co2" class="border-solid border-2 border-sky-500 rounded-md">
-    @for(co2Class of co2Classes; track co2Class){
-        <option [value]="co2Class">{{co2Class}}</option>
-    }
-</select><br>
-
-<button (click)="searchRecipe()">Get Recipes</button>
-
-@for(recipe of recipes; track recipe){
-    <article>
-        <img src="{{recipe.image}}" alt="Image of {{recipe.label}}">
-        <h3>{{recipe.label}}</h3>
-        <p>Time to cook: {{recipe.totalTime}} min.</p>
-        <p>co2 Emissions: {{recipe.co2EmissionsClass}}</p>
-        <p><a [routerLink]="['/recipe', recipe.selfref | recipeidformatter]">More Info</a></p>
-    </article>
-}
