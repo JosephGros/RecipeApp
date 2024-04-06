@@ -6,6 +6,7 @@ import { User } from '../interfaces/user';
 import { Register } from '../interfaces/register';
 import { LoggedInUser } from '../interfaces/logged-in-user';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 interface ResultData {
   token: string,
@@ -40,7 +41,7 @@ export class AuthService {
     }),
   }
 
-  constructor(private http:HttpClient, private router: Router) {}
+  constructor(private http:HttpClient, private router: Router, private location: Location) {}
 
   updateLoginState(loginState: LoggedInUser) {
     this.signedIn.next(loginState);
